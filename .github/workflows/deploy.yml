@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main   # أي push على الفرع main يشغل النشر
-
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
