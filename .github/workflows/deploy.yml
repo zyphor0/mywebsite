@@ -3,23 +3,39 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main   # أي push على الفرع main يشغل النشر
+      - main   # شغّل الـ workflow فقط عند التعديلات على الفرع main
+
 permissions:
   contents: read
   pages: write
   id-token: write
-  
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      # 1. سحب الكود
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      # 2. نشر على GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # لو موقعك HTML/CSS فقط، ما تحتاج Build
+      # لو عندك React/Vue/Angular استخدم أوامر build بدل echo
+      - name: Build project
+        run: |
+          echo "No build step required"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .   # مجلد الموقع (ضع ./dist لو تستخدم build)
+          path: ./   # غيّرها لو عندك dist أو build
+          
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
