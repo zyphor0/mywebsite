@@ -3,7 +3,7 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main   # شغّل الـ workflow فقط عند التعديلات على الفرع main
+      - main   
 
 permissions:
   contents: read
@@ -18,8 +18,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # لو موقعك HTML/CSS فقط، ما تحتاج Build
-      # لو عندك React/Vue/Angular استخدم أوامر build بدل echo
+          
+            
       - name: Build project
         run: |
           echo "No build step required"
@@ -27,7 +27,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./   # غيّرها لو عندك dist أو build
+          path: ./   
           
   deploy:
     environment:

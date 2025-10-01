@@ -3,19 +3,19 @@ name: Deploy Static Website
 on:
   push:
     branches:
-      - main   # أي push على الفرع main يشغل النشر
+      - main   
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. سحب الكود
+      
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. نشر على GitHub Pages
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .   # مجلد الموقع (ضع ./dist لو تستخدم build)
+          publish_dir: .  
