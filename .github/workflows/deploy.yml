@@ -1,5 +1,4 @@
-name: Deploy Static Website
-
+name: Deploy 
 on:
   push:
     branches:
